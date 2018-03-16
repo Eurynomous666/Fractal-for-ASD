@@ -13,8 +13,6 @@ namespace Fractal
 {
     public partial class Fractal : Form
     {
-       
-      
         private const int MAX = 256;      // max iterations
         private const double SX = -2.025; // start value real
         private const double SY = -1.125; // start value imaginary
@@ -22,18 +20,27 @@ namespace Fractal
         private const double EY = 1.125;  // end value imaginary
         private static int x1, y1, xs, ys, xe, ye;
         private static double xstart, ystart, xende, yende, xzoom, yzoom;
-        private static Boolean action, rectangle, finished;
+        private static bool action, rectangle, finished;
         private static float xy;
+        private bool mouseDown = false;
         //private Image picture;
-        private Graphics g1;
-        private Graphics g;
         private Bitmap picture;
+        private Graphics g;
+        private Graphics g1;
         private Cursor c1, c2;
-
-
+        private HSB HSBcol;
         private Pen pen;
         private Rectangle rect;
-        private HSB HSBcol;
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            HSB hsb = new HSB();
+        }
 
 
         private void stop()
@@ -44,41 +51,51 @@ namespace Fractal
         }
 
 
-        public void InitializeForm() // all instances will be prepared
+        public Fractal()
         {
             InitializeComponent();
             HSBcol = new HSB();
-            
-            this.pictureBox1.Size = new System.Drawing.Size(640, 480); //setSize(640, 480);
+            //setSize(640, 480);
+            this.pictureBox1.Size = new System.Drawing.Size(640, 480); // equivalent of setSize in java code
             finished = false;
             //addMouseListener(this);
             //addMouseMotionListener(this);
+            //c1 = new Cursor(Cursor.WAIT_CURSOR);
+            //c2 = new Cursor(Cursor.CROSSHAIR_CURSOR);
             c1 = Cursors.WaitCursor;
             c2 = Cursors.Cross;
-            x1 = pictureBox1.Width;//300 value
-            y1 = pictureBox1.Height;//300 value
+            //x1 = getsize().width;
+            //y1 = getsize().height;
+            x1 = pictureBox1.Width;
+            y1 = pictureBox1.Height;
             xy = (float)x1 / (float)y1;
-            picture = new Bitmap(x1,y1);
+            //picture = createImage(x1, y1);
+            picture = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            //g1 = picture.getGraphics();
             g1 = Graphics.FromImage(picture);
             finished = true;
+           // editToolStripMenuItem.Enabled = false;
 
             start();
+
         }
 
 
-      /*  public void destroy() // delete all instances 
-        {
-            if (finished)
-            {
-                //removeMouseListener(this);
-                //removeMouseMotionListener(this);
-                picture = null;
-                g1 = null;
-                c1 = null;
-                c2 = null;
-                //System.gc(); // garbage collection
-            }
-        }*/
+
+
+        /*  public void destroy() // delete all instances 
+          {
+              if (finished)
+              {
+                  //removeMouseListener(this);
+                  //removeMouseMotionListener(this);
+                  picture = null;
+                  g1 = null;
+                  c1 = null;
+                  c2 = null;
+                  //System.gc(); // garbage collection
+              }
+          }*/
 
         public void start()
         {
